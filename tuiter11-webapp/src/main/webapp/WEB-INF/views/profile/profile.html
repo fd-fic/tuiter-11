@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title th:text="#{view.index.title}">Welcome!</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/bootstrap.min.css}" />
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+	<div th:replace="fragments/header :: header">&nbsp;</div>
+	<div class="container">
+		<h3 class="text-center" th:text="${'@' + profileAccount.nickName}">User
+			Nick</h3>
+		<div class="col-md-3 col-sm-5 col-xs-12">
+			<!-- ************************** PROFILE DATA ************************** -->
+			<div class="profile-box">
+				<table class="table" id="profile">
+					<tr>
+						<th>E-mail</th>
+						<td th:text="${profileAccount.email}"></td>
+					</tr>
+
+					<tr>
+						<th>Nick</th>
+						<td th:text="${profileAccount.nickName}"></td>
+					</tr>
+				</table>
+
+				<div th:if="${profileAccount.id != myAccount.id}" class="bs-example">
+					<div th:if="${!imBlocked} and ${!isBlokedByMe}"
+						class="btn form-group text-center">
+						<!-- Follow / UnFollow Button -->
+						<div th:if="${!isFollowedByMe}" class="btn form-group text-center">
+							<a th:href="@{'/'+${profileAccount.nickName}+'/follow'}"
+								class="btn btn-success">Follow</a>
+						</div>
+						<div th:if="${isFollowedByMe}" class="btn form-group text-center">
+							<a th:href="@{'/'+${profileAccount.nickName}+'/unfollow'}"
+								class="btn btn-danger">Unfollow</a>
+						</div>
+					</div>
+					<!-- Block / UnBlock Button -->
+					<div th:switch="${isBlokedByMe}" class="btn form-group text-center">
+						<a th:case="false"
+							th:href="@{'/'+${profileAccount.nickName}+'/block'}"
+							class="btn btn-danger">Block</a> <a th:case="true"
+							th:href="@{'/'+${profileAccount.nickName}+'/unblock'}"
+							class="btn btn-success">Unblock</a>
+					</div>
+				</div>
+
+
+				<div th:if="${profileAccount.id == myAccount.id}"
+					class="form-group text-center">
+					<a href="/profile/edit" th:href="@{/profile/edit}"
+						class="btn btn-default">Edit Profile</a>
+				</div>
+			</div>
+			<!-- ************************** FOLLOWED LIST ************************** -->
+			<div class="profile-box text-center">
+				<h3 class="text-center little-top-margin" text="Followed List">Followed
+					List</h3>
+				<div class="followed" th:each="followed : ${followeds}">
+					<a href="/" th:href="@{'/' + ${followed.nickName}}"
+						th:text="${followed.nickName}" class="account-small-view">UserN</a>
+				</div>
+			</div>
+		</div>
+		<!-- ************************** USER PUBLICATIONS ************************** -->
+		<div class="col-md-6 col-sm-7 col-xs-12">
+			<h4 th:if="${canIsee == false}" align="center">This is a private
+				account.</h4>
+
+			<div th:if="${canIsee == true}">
+				<div th:replace="fragments/publications::publications (${publications},
+							${myAccount},
+							${myRetuitedTuits},
+							${myFavoriteTuits})"></div>
+			</div>
+		</div>
+		<!-- ************************** FOLLOWERS LIST ************************** -->
+		<div class="col-md-3 col-sm-5 col-xs-12">
+			<div class="profile-box text-center">
+				<h3 class="text-center little-top-margin" text="Followers List">Followers
+					List</h3>
+				<div class="follower" th:each="follower : ${followers}">
+					<a href="/" th:href="@{'/' + ${follower.nickName}}"
+						th:text="${follower.nickName}" class="account-small-view">UserN</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

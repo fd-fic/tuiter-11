@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Manage New Users</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/bootstrap.min.css}" />
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:replace="fragments/header :: header">Header</div>
+	<div class="container">
+		<div class="text-center">
+			<h3>Manage New Users</h3>
+		</div>
+		<div class="col-md-3 col-sm-2 col-xs-0"></div>
+		<div class="col-md-6 col-sm-8 col-xs-12">
+			<div class="panel panel-info " th:each="account : ${notAllowedAccs}">
+				<div class="panel-heading">
+					<h3 class="panel-title" th:text="'@' + ${account.nickName}"></h3>
+					<div class="text-right">
+					<a th:href="@{'/admin/newusers/' + ${account.nickName} + '/confirmuser'}"
+						class="btn btn-success">Allow</a>
+					<a th:href="@{'/admin/newusers/' + ${account.nickName} + '/denyuser'}"
+						class="btn btn-danger">Deny</a>
+						</div>
+				</div>
+				<div class="panel-body">Panel content</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

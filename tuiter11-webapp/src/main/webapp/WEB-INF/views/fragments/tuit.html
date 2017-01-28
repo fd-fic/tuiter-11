@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/bootstrap.min.css}" />
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:fragment="tuit (tuit,myAccount, wasRetuitedByMe, wasMarkedAsFavorite)">
+		<div class="tuit">
+			<div>
+				<a id="tuitUser" class="text-right" href="/"
+					th:href="@{'/' + ${tuit.acc.nickName}}"
+					th:text="'@' + ${tuit.acc.nickName}">Manolo</a>
+				<p id="tuitfecha" class="text-right"
+					th:text="${#calendars.format(tuit.fecha,'HH:mm - dd MMMM yyyy')}" />
+			</div>
+			<p th:text="${tuit.tuit}" />
+			<span class="form-group tuit-options">
+
+				<div class="tuitOpt">
+					<a th:href="@{'/'+${tuit.id}+'/conversations'}"
+					   class="glyphicon glyphicon-comment"></a>
+				</div>
+
+				<div class= "tuitOpt" th:if="${myAccount.id != tuit.acc.id}" th:switch="${wasRetuitedByMe}">
+					<a th:case="false" 
+						th:href="@{'/'+${tuit.id}+'/retuit'}" 
+						class="glyphicon glyphicon-retweet "></a> 
+					<a th:case="true"
+						th:href="@{'/'+${tuit.id}+'/unretuit'}"
+						class="glyphicon glyphicon-retweet green"></a>
+				</div>
+				
+				<div class= "tuitOpt" th:switch="${wasMarkedAsFavorite}">
+					<a th:case="false" 
+						th:href="@{'/'+${tuit.id}+'/favorite'}"
+						class="glyphicon glyphicon glyphicon-star"></a> 
+					<a th:case="true"
+						th:href="@{'/'+${tuit.id}+'/removefavorite'}"
+						class="glyphicon glyphicon glyphicon-star yellow"></a>
+				</div>
+				
+				<div class= "tuitOpt" sec:authorize="hasRole('ROLE_ADMIN')"> 
+					<a th:href="@{'/'+${tuit.id}+'/removetuit'}"
+						class="glyphicon glyphicon glyphicon-remove red"></a>
+				</div>
+				
+			</span>
+			
+		</div>
+	</div>
+</body>
+</html>

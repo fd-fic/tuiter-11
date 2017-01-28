@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Panel - Offensive Tuits</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/bootstrap.min.css}" />
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:replace="fragments/header :: header">Header</div>
+	<div class="container">
+		<div class="text-center">
+			<h3>Admin Panel - Offensive Tuits</h3>
+		</div>
+		
+		<div th:switch="!${#lists.isEmpty(offensiveTuits)}">
+			<div th:case ="true"> 
+				<div class="conversation" th:each="offTuit : ${offensiveTuits}">
+				<div class="tuit">
+					<div>
+						<a id="tuitUser" class="text-right" href="/"
+							th:href="@{'/' + ${offTuit.acc.nickName}}"
+							th:text="'@' + ${offTuit.acc.nickName}">Manolo</a>
+						<p id="tuitfecha" class="text-right"
+							th:text="${#calendars.format(offTuit.fecha,'HH:mm - dd MMMM yyyy')}" />
+					</div>
+					<p th:text="${offTuit.tuit}"/>
+					<a th:href="@{'/'+${offTuit.id}+'/removetuit'}"
+				   		class="glyphicon glyphicon-trash"></a>	
+				</div>
+				</div>
+			</div>
+			<div th:case="false" class="jumbotron">
+				<h1 align="center">Congrats!</h1>
+				<p align="center">No offensive tuits in the system</p>
+			</div>
+		
+		</div>
+		
+	</div>
+</body>
+</html>

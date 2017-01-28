@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title th:text="#{view.index.title}">Search Results</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/bootstrap.min.css}" />
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:replace="fragments/header :: header">&nbsp;</div>
+	<div class="container">
+		<h2>Search results: </h2>
+		<div class="panel panel-info" th:each="account : ${accounts}">
+  			<div class="panel-heading">
+    			<h3 class="panel-title">
+    				<a th:href="@{${account.nickName}}">
+						<p th:text="'@' + ${account.nickName}"/>
+					</a>
+				</h3>
+  			</div>
+  			<div class="panel-body">
+    			Panel content
+  			</div>
+		</div>
+		<!--<ul class="list-group">
+			<div th:each="account : ${accounts}">
+				<li class="list-group-item disabled" th:each="account : ${accounts}">
+					<a th:href="@{${account.nickName}}">
+						<p th:text="'@' + ${account.nickName}"/>
+					</a>
+				</li>
+			</div>
+		</ul>-->
+	</div>
+</body>
+</html>

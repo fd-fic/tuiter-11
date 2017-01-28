@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/bootstrap.min.css}" />
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<!-- El fragment de las publicaciones necesita de una la cuenta, para evitar  -->
+<!-- que un usuario se retuitee a si mismo y de la lista de tuits ya retuiteados -->
+<!-- para evitar que un usuario retuitee dos veces el mismo tuit -->
+	<div
+		th:fragment="publications (publications,myAccount, myRetuitedTuits, myFavoriteTuits)">
+
+		<div th:each="publish : ${publications}">
+
+			<!-- *************************** TUIT **************************** -->
+
+			<div th:if="${publish instanceof T(es.udc.fi.dc.fd.tuit.Tuit)}">
+				<div
+					th:replace="fragments/tuit::tuit (${publish},
+							${myAccount},
+							${#lists.contains(myRetuitedTuits, publish)},		
+							${#lists.contains(myFavoriteTuits, publish)})"></div>
+			</div>
+			<!-- *************************** RETUIT **************************** -->
+			<div th:if="${publish instanceof T(es.udc.fi.dc.fd.retuit.Retuit)}">
+				<div
+					th:replace="fragments/retuit::retuit (${publish},
+							${myAccount},
+							${#lists.contains(myRetuitedTuits, publish.tuit)},		
+							${#lists.contains(myFavoriteTuits, publish.tuit)})"></div>
+			</div>
+			
+			
+		</div>
+
+	</div>
+
+</body>
+</html>

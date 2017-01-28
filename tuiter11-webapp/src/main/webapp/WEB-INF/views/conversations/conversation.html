@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Conversation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/bootstrap.min.css}" />
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:replace="fragments/header :: header">&nbsp;</div>
+	<div class="container">
+		
+		<div class="parents">
+			<div th:replace="fragments/publications::publications (${parents},
+							${myAccount},
+							${myRetuitedTuits},
+							${myFavoriteTuits})">
+				</div>
+		</div>
+	
+	
+		<div class="parentTuit">
+			<div class="conversation" th:if="${tuit instanceof T(es.udc.fi.dc.fd.tuit.Tuit)}">
+						<div
+							th:replace="fragments/publications::publications (${tuit},
+									${myAccount},
+									${myRetuitedTuits},
+									${myFavoriteTuits})">
+						</div>
+			</div>
+		</div>
+		<div class="inputResponse">
+			<form th:action="@{'/'+ ${tuit.id} + '/processResponse'}" th:object="${responseForm}" method="post">
+				<div class="responseForm">
+					<div>
+						<div class="input-group">
+							<input type="text" th:field="*{tuit}" th:placeholder="'Response to @' + ${tuit.acc.nickName}" 
+								class="form-control" /> 
+							<span class="input-group-btn">
+							<button class="btn btn-default" type="submit">Response</button>
+							</span>
+						</div>
+						<!-- /input-group -->
+					</div>
+					<!-- /.col-lg-6 -->
+				</div>
+				<!-- /.row -->
+			</form>
+		</div>
+		<div class="response">
+				<div th:replace="fragments/publications::publications (${responses},
+							${myAccount},
+							${myRetuitedTuits},
+							${myFavoriteTuits})">
+				</div>
+		</div> 
+	</div>
+</body>
+</html>

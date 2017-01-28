@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/bootstrap.min.css}" />
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:fragment="retuit (retuit,myAccount, wasRetuitedByMe, wasMarkedAsFavorite)">
+		<div class="retuit-owner">
+			<p>
+				Retuited By <a id="tuitUser" class="text-right" href="/"
+					th:href="@{'/' + ${retuit.retuiter.nickName}}"
+					th:text="'@' + ${retuit.retuiter.nickName}">Manolo</a>
+			</p>
+		</div>
+		<div class="retuit-tuit">
+			<div
+				th:replace="fragments/tuit::tuit (${retuit.tuit},
+							${myAccount},
+							${wasRetuitedByMe},
+							${wasMarkedAsFavorite})"></div>
+		</div>
+
+	</div>
+
+</body>
+</html>

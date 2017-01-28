@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title th:text="#{view.index.title}">Welcome!</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/bootstrap.min.css}" />
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:replace="fragments/header :: header">&nbsp;</div>
+	<div class="container">
+		<!-- /* Handle the flash message */-->
+		<th:block th:if="${message != null}">
+			<!-- /* The message code is returned from the @Controller */ -->
+			<div
+				th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
+		</th:block>
+
+		<!-- Utilizamos esto para centrar la colunma de enmedio -->
+		<div class="col-md-3 col-sm-2 col-xs-12"></div>
+		<div class="col-md-6 col-sm-8 col-xs-12">
+			<form th:action="@{processTuit}" th:object="${tuitForm}"
+				method="post">
+				<div class="row">
+					<div>
+						<div class="input-group">
+							<input type="text" th:field="*{tuit}" class="form-control" /> <span
+								class="input-group-btn">
+								<button class="btn btn-default" type="submit">Tuit!</button>
+							</span>
+						</div>
+						<!-- /input-group -->
+					</div>
+					<!-- /.col-lg-6 -->
+				</div>
+				<!-- /.row -->
+			</form>
+			<h3 class="text-center">Time Line</h3>
+
+			<div th:replace="fragments/publications::publications (${publications},
+							${myAccount},
+							${myRetuitedTuits},
+							${myFavoriteTuits})"></div>
+		</div>
+	</div>
+</body>
+</html>
